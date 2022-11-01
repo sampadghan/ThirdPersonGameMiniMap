@@ -16,7 +16,6 @@
 #include "Engine/Engine.h"
 #include "Engine/GameInstance.h"
 
-
 //////////////////////////////////////////////////////////////////////////
 // AThirdPersonGameCharacter
 
@@ -156,6 +155,21 @@ void AThirdPersonGameCharacter::MoveRight(float Value)
 void AThirdPersonGameCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+	for (FConstPlayerControllerIterator Iterator = GetWorld()->GetPlayerControllerIterator(); Iterator; ++Iterator)
+	{
+		APlayerController* PlayerController = Iterator->Get();
+		if (PlayerController)
+		{
+			PlayerController->ConsoleCommand("ShowMiniMap");
+		}
+	}
+	/*
+	APlayerController* PlayerController = GetWorld()->GetFirstPlayerController();
+	if (IsValid(PlayerController))
+	{
+		PlayerController->ConsoleCommand("ShowMiniMap");
+	}
+	*/
 }
 
 void AThirdPersonGameCharacter::Tick(float DeltaTime)
